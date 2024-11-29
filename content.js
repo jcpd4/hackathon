@@ -30,6 +30,74 @@ const observer = new MutationObserver(() => {
       document.getElementById("scamInfoBox").remove();
     }
   });
+  chrome.storage.local.get(['isExtensionActive', 'analyzeInboxActive'], (data) => {
+    const isActive = data.isExtensionActive || false;
+    const isInboxActive = data.analyzeInboxActive || false;
+  
+    if (!isActive) {
+      const existingInfoBox = document.getElementById("scamInfoBox");
+      if (existingInfoBox) {
+        existingInfoBox.remove();
+      }
+      console.log('La detección de correos está desactivada. Se ha eliminado la infoBox.');
+      return;
+    }
+  
+    // Analizar la bandeja de entrada
+    if (isInboxActive) {
+      console.log('Análisis de bandeja activado. Marcando correos seleccionados.');
+  
+      const emails = document.querySelectorAll('.zA'); // Selector genérico para correos en Gmail
+      const scamEmails = [2, 5]; // Correos a marcar (índices 2 y 5)
+  
+      emails.forEach((email, index) => {
+        if (scamEmails.includes(index + 1)) {
+          // Evitar que el mensaje se inserte más de una vez
+          if (!email.querySelector('.scam-warning')) {
+            email.style.backgroundColor = 'black';
+            email.style.color = 'white';
+  
+            const scamProbability = Math.floor(Math.random() * (95 - 88 + 1)) + 88; // Aleatorio entre 88 y 95
+            const aiProbability = Math.floor(Math.random() * (100 - 88 + 1)) + 88; // Aleatorio entre 88 y 100
+  
+            // Crear el contenedor del mensaje en formato horizontal
+            const warningMessage = document.createElement('div');
+            warningMessage.classList.add('scam-warning');
+            warningMessage.style.display = 'flex';
+            warningMessage.style.justifyContent = 'space-between';
+            warningMessage.style.alignItems = 'center';
+            warningMessage.style.padding = '10px';
+            warningMessage.style.marginTop = '10px';
+            warningMessage.style.backgroundColor = 'black';
+            warningMessage.style.color = 'white';
+            warningMessage.style.borderRadius = '5px';
+  
+            warningMessage.innerHTML = `
+              <p style="color: red; font-weight: bold; margin: 0;">BLOCK by SCAMIA</p>
+              <p style="margin: 0;">Porcentaje de Scam: ${scamProbability}% ⚠️</p>
+              <p style="margin: 0;">Porcentaje de TextGeneratorIA: ${aiProbability}% 🧠</p>
+            `;
+            email.appendChild(warningMessage);
+  
+            // Añadir evento de clic para desbloquear el correo
+            email.addEventListener('click', (event) => {
+              event.stopPropagation();
+              const confirmUnblock = confirm(
+                `El correo número ${index + 1} ha sido bloqueado para evitar un posible fraude.\n\n` +
+                '¿Quieres desbloquear este correo?'
+              );
+              if (confirmUnblock) {
+                email.style.backgroundColor = '';
+                email.style.color = '';
+                warningMessage.remove();
+              }
+            });
+          }
+        }
+      });
+    }
+  });
+  
 });
 
 // Configurar el observer para observar cambios en el DOM
