@@ -1,0 +1,90 @@
+body {
+  font-family: 'Roboto', sans-serif; /* Fuente profesional */
+  padding: 20px;
+  width: 400px; /* Ancho del popup */
+  text-align: center;
+  background-color: #f5f5f5; /* Fondo claro para contraste */
+}
+h1 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #333; /* Color gris oscuro para el título */
+}
+
+button {
+  display: flex;
+  align-items: center; /* Alinear icono y texto verticalmente */
+  justify-content: flex-start; /* Alinear contenido al inicio */
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #000; /* Fondo negro */
+  color: #fff; /* Texto blanco */
+  border: 1px solid #333; /* Borde negro */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left; /* Alinear texto a la izquierda */
+  gap: 10px; /* Espaciado entre imagen y texto */
+}
+
+button:hover {
+  background-color: #444; /* Negro más claro al pasar el mouse */
+  color: #f0f0f0; /* Texto gris claro al pasar el mouse */
+  border-color: #666; /* Borde más claro */
+}
+
+/* Contenedor de los botones */
+#buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Espaciado entre los botones */
+}
+
+/* Efecto al hacer clic */
+button:active {
+  background-color: #222; /* Negro más intenso al hacer clic */
+}
+
+/*No entiendo porque no cambia el color de fondo
+html body #infoBox{
+  background-color: red !important
+}
+
+*/
+
+
+/* PARTE GRAFICA */
+#chartContainer {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 200px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.chartBar {
+  width: 20px;
+  margin-right: 10px;
+  background-color: #673ab7;  /* Lila oscuro */
+  transition: height 0.3s;
+}
+
+
+/* Estilo para las imágenes en los botones */
+.buttonIcon {
+  width: 30px; /* Ancho de la imagen */
+  height: 30px; /* Altura de la imagen */
+  object-fit: contain; /* Ajustar imagen al espacio disponible */
+}
+
+/* Estilo para el nombre del proyecto */
+#projectName {
+  font-size: 12px; /* Tamaño pequeño */
+  margin-bottom: 10px; /* Espaciado debajo del nombre */
+  color: #666; /* Un gris suave */
+  font-weight: bold; /* Negrita para destacarlo */
+  text-transform: uppercase; /* Texto en mayúsculas */
+}
